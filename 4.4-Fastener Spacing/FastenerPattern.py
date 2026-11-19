@@ -37,11 +37,11 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
             i=i-1
     print(x_cords,z_cords)
 
-    x_sum=0 
+    x_sum = 0 
     z_sum = 0
     x_cg = 0
     z_cg= 0
-    for i in range(0,2*n):
+    for i in range(0,n):
         x_sum += x_cords[i]
         z_sum += z_cords[i]
         x_cg = x_sum/n
