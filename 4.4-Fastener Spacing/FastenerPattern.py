@@ -15,7 +15,7 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
         else:
             Space = 3 * DiameterFastener
     elif Mat == 1:
-        if conservative ==0:
+        if conservative == 0:
             Space = 5 * DiameterFastener
         else:
             Space = 4 * DiameterFastener
@@ -30,10 +30,10 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
         while i>0:
             #left side
             x_cords.append(-(t_1/2+ 1.5*DiameterFastener+0.5*DiameterFastener)-j*Space)
-            z_cords.append((i-1/2)*DiameterFastener+1.5*DiameterFastener+(Space-1)*(i-1)-(n*DiameterFastener+3*DiameterFastener+(Space-1)*(a-1))/2)
+            z_cords.append((i-1/2)*DiameterFastener+1.5*DiameterFastener+(Space-1)*(i-1)-(a*DiameterFastener+3*DiameterFastener+(Space-1)*(a-1))/2)
             #right side
             x_cords.append(t_1/2+ 1.5*DiameterFastener+0.5*DiameterFastener+j*Space)
-            z_cords.append((i-1/2)*DiameterFastener+1.5*DiameterFastener+(Space-1)*(i-1)-(n*DiameterFastener+3*DiameterFastener+(Space-1)*(a-1))/2)
+            z_cords.append((i-1/2)*DiameterFastener+1.5*DiameterFastener+(Space-1)*(i-1)-(a*DiameterFastener+3*DiameterFastener+(Space-1)*(a-1))/2)
             i=i-1
     print(x_cords,z_cords)
 
