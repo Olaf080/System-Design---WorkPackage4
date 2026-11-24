@@ -1,0 +1,30 @@
+#
+from FastenerPattern import Spacing
+x_cords = []
+y_cords = []
+
+Spacing(1,2,0,x_cords,y_cords,1,2,2)
+
+positions = list(zip(x_cords,y_cords)) #each pair is the coordinates of one fastener#
+
+Fz = 329.6 #N
+
+n = len(positions)
+F_per_fastener = Fz / n
+
+#for bending about the x-axis the relevant distance r is the y-distance from the fastner to the x axis
+
+sum_r2 = 0 
+for x, y in positions:
+    sum_r2 = sum_r2 + y**2
+
+Mx = 439.5 #Nm 
+
+Forces = []
+
+for x,y in positions:
+    F = Mx * y / sum_r2
+    F_total = F_per_fastener + F
+
+    Forces.append(F_total)
+    print("Hole at", (x, y), "mm has force", round(F_total, 1), "N")
