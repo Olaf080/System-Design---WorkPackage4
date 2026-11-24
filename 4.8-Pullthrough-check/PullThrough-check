@@ -1,5 +1,14 @@
 #
+
+from pathlib import Path
+import sys
+
+project_folder = Path(__file__).resolve().parent.parent
+spacing_folder = project_folder / "4.4-Fastener Spacing"
+sys.path.insert(0, str(spacing_folder))
+
 from FastenerPattern import Spacing
+
 x_cords = []
 y_cords = []
 
