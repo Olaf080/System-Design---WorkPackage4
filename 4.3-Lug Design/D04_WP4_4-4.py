@@ -3,10 +3,72 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from itertools import product
 from mpl_toolkits.mplot3d import Axes3D
+from scipy.optimize import brentq
 
 Axial = 299.66/2
 Trans = 998.85/2
 SafetyMarg = 0.5
+
+def MaxHoleStress(F_a, F_t, F_x, W, D, t):
+
+    A = abs(F_a) / t
+    B = 6 * abs(F_t) * W / t
+    C = 6 * abs(F_x) / t**2
+
+    # Width of hole at section y
+    def d(y):
+        return np.sqrt(np.maximum(0, D**2 - 4*y**2))
+
+    # Combined axial and bending stress
+    def Stress(y):
+        h = d(y)
+
+        return (
+            (A + C*y) / (W - h)
+            + B*y / (W**3 - h**3)
+        )
+
+    # Simplified stationary-point equation
+    def Stationary(y):
+        h = d(y)
+
+        return (
+            C*(W*h - D**2)
+            - 4*A*y
+            + B*h*(W**3 + 2*h**3 - 3*D**2*h)
+            / (W**2 + W*h + h**2)**2
+        )
+
+    # Include boundaries as possible maxima
+    candidates = [0, D/2]
+
+    # Search for stationary points
+    y_vals = np.linspace(0, D/2, 200)
+    derivatives = Stationary(y_vals)
+
+    for i in range(len(y_vals) - 1):
+
+        if derivatives[i] == 0:
+            candidates.append(y_vals[i])
+
+        elif derivatives[i]*derivatives[i+1] < 0:
+            y_stationary = brentq(
+                Stationary,
+                y_vals[i],
+                y_vals[i+1]
+            )
+
+            candidates.append(y_stationary)
+
+    # Find the location giving the highest stress
+    stresses = Stress(np.array(candidates))
+    index = np.argmax(stresses)
+
+    return stresses[index], candidates[index]
+
+
+
+
 
 def FailChecker(F_a, F_t, W, D, t, Fam, MSafety, L):
     F_x = 299.66/2
@@ -55,6 +117,15 @@ def FailChecker(F_a, F_t, W, D, t, Fam, MSafety, L):
         return False
 
 
+    sigma_max, y_max = MaxHoleStress(
+        F_a, F_t, F_x, W, D, t
+    )
+
+    if (1 + MSafety)*sigma_max >= Ft_Yield[Fam]*1e6:
+        return False
+
+
+
     #Checking Eq6
 
     r1_floor = (0.5 * math.floor(r1/0.5))
@@ -91,18 +162,18 @@ def FailChecker(F_a, F_t, W, D, t, Fam, MSafety, L):
     else:
         return True
 
-W_vals = np.arange(0.0501, 0.1, 0.001)
-L_vals = np.arange(0.02, 0.3, 0.001)
+W_vals = np.arange(0.0201, 0.1, 0.001)
+L_vals = [0.02]
 t_vals = np.arange(0.001, 0.051, 0.001)
 Mat_vals = np.arange(0, 12)
 
 
 
 Final = 100000000000
-Result = [1, 3, 4]
+Result = [1, 3, 5, 4]
 for i, k, l, j in product(W_vals, t_vals, Mat_vals, L_vals):
-        if FailChecker(Axial, Trans, i, 0.05, k, l, SafetyMarg, j):
-            Vol = (k * ((i**2)*((1/2) + (math.pi/8)) - (0.05**2)*(math.pi/4) + i*j))
+        if FailChecker(Axial, Trans, i, 0.02, k, l, SafetyMarg, j):
+            Vol = (k * ((i**2)*((1/2) + (math.pi/8)) - (0.02**2)*(math.pi/4) + i*j))
             if l ==0 or l == 3 or l == 6:
                 Weight = Vol * 2810
             elif l ==7 or l == 8 or l == 9:
@@ -122,4 +193,11 @@ print("Thickness is ", Result[1])
 print("Material is ", Result[2])
 print("Length is ", Result[3])
 
+sigma_max, y_max = MaxHoleStress(
+    Axial, Trans, 299.66/2,
+    Result[0], 0.02, Result[1]
+)
+
+print("Maximum hole stress:", sigma_max/1e6, "MPa")
+print("Location from hole centre:", y_max*1000, "mm")
 
