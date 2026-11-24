@@ -23,5 +23,5 @@ We find that :
 P = math.sqrt(F_cgx**2 + F_cgz**2)/n 
 Fx = F_cgx / n
 Fz = F_cgz / n
-
+print(Spacing(1,1,1,1,1,1,1,1))
 # Bearing Stress is the stress between the fastener and the material it is put in
