@@ -1,4 +1,5 @@
 
+import math 
 import sys
 from pathlib import Path
 
@@ -10,18 +11,16 @@ from FastenerPattern import Spacing
 F_cgx = 582.67
 F_cgy = 299.66 
 F_cgz = 299.66
-
 n = 6
 
 ''' 
-
 Assuming that the Fastener Configuration is symmetric around the x,z-axis
 We find that :
   F_cgx = F_x
   F_cgz = F_z 
-
 '''
 
+P = math.sqrt(F_cgx**2 + F_cgz**2)/n 
 Fx = F_cgx / n
 Fz = F_cgz / n
 
