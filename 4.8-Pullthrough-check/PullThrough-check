@@ -1,4 +1,4 @@
-#
+import math
 
 from pathlib import Path
 import sys
@@ -27,7 +27,7 @@ sum_r2 = 0
 for x, y in positions:
     sum_r2 = sum_r2 + y**2
 
-Mx = 439.5 #Nm 
+Mx = -439500 #Nmm 
 
 Forces = []
 
@@ -37,3 +37,45 @@ for x,y in positions:
 
     Forces.append(F_total)
     print("Hole at", (x, y), "mm has force", round(F_total, 1), "N")
+
+F_pull_through = max(Forces)
+print ("the maximum pull through load is: ", F_pull_through, "N" )
+
+#pull through continue 4.9
+
+#fastener parameters
+#Df0 = 
+#Dfi = 
+#plate height --> t2 = 
+#wall thickness --> t3 = 
+
+F_total = Fz/n + Mx*y/sum_r2
+
+contact_area_plate = math.pi * ((Df0/2)**2 - (Dfi/2)**2)
+
+Pressure_plate = F_total / contact_area_plate
+
+Shear_area_plate = math.pi * Dfi * t2 
+shear_stress_plate = F_pull_through / Shear_area_plate
+
+print("The shear stress in the backup plate is", shear_stress_plate, "MPa")
+
+#check if material passes#
+Y = 325 #[MPa]
+shear_yield = Y / math.sqrt(3)
+
+if shear_stress_plate <= shear_yield:
+    print("Back-up plate passes the pull-through check")
+else:
+    print("Back-up plate fails the pull-through check")
+
+Shear_area_wall = math.pi * Dfi * t3
+shear_stress_wall = F_pull_through / Shear_area_wall
+
+print("The shear stress in the backup plate is", shear_stress_wall, "MPa")
+
+if shear_stress_wall <= shear_yield:
+    print("Wall passes the pull-through check")
+else:
+    print("Wall fails the pull-through check")
+
