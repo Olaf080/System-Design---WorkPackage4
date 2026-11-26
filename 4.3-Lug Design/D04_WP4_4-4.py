@@ -10,6 +10,7 @@ Trans = 998.85/2
 SafetyMarg = 0.5
 
 def MaxHoleStress(F_a, F_t, F_x, W, D, t):
+    #THIS FUNCTION IS AI- REQUIRES SOLVING 10TH ROOTS
 
     A = abs(F_a) / t
     B = 6 * abs(F_t) * W / t
@@ -192,6 +193,7 @@ print("Width is ", Result[0])
 print("Thickness is ", Result[1])
 print("Material is ", Result[2])
 print("Length is ", Result[3])
+
 
 sigma_max, y_max = MaxHoleStress(
     Axial, Trans, 299.66/2,
