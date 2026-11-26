@@ -12,7 +12,7 @@ maxWall = 441 * 1e6
 
 t_list = np.arange(0.001, 0.051, 0.001)
 
-
+#11671 is ONLY FOR 4 FASTENERS IN THE CONFIG ON WHATSAPP
 
 def BearFail(D2, t_2, maxPart):
         sigma_br = 11671.655/(D2 * t_2)
