@@ -24,7 +24,7 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
 
     W = (Space * (a-1) + 2  *EdgeDistance)
     print(W)
-
+#conservative: a=3, d=3, 9+9+2=20, a=5,d=2, 10+6+4=20, a=2, d=4, 21, a=7, d=1
     for j in range (0,b):
         i=a
         while i>0:
@@ -37,10 +37,10 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
             i=i-1
     print(x_cords,z_cords)
 
-    x_sum = 0 
+    x_sum = 0
     z_sum = 0
     x_cg = 0
-    z_cg= 0
+    z_cg = 0
     for i in range(0,n):
         x_sum += x_cords[i]
         z_sum += z_cords[i]
