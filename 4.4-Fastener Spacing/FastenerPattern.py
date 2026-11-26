@@ -48,4 +48,4 @@ def Spacing(Mat,DiameterFastener,conservative,x_cords,z_cords,t_1,a,b):
         z_cg=z_sum/n
     print(x_cg,z_cg)
 
-print(Spacing(1,2,0,x_cords,z_cords,1,2,2))
+print(Spacing(0,4,0,x_cords,z_cords,1,2,1))

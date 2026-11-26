@@ -48,11 +48,12 @@ def calc_moment(x_cords, y_cords, x, y):
 x_cords = []
 y_cords = []
 
-Spacing(1, 2, 0, x_cords, y_cords, 1, 2, 2)
+Spacing(0, 4, 0, x_cords, y_cords, 1, 2, 1)
 
 #force centred at the centre of the plate
 F = calc_moment (x_cords, y_cords, x=0, y=0)
-
+print(x_cords)
+print(y_cords)
 print(F)
 
 

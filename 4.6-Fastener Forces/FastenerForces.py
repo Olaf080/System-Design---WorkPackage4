@@ -8,19 +8,25 @@ sys.path.append(str(spacing_folder))
 from FastenerPattern import Spacing
 
 
-F_cgx = 582.67
-F_cgy = 299.66 
-F_cgz = 299.66
-n = 6
+F_cgx = 1098.7
+F_cgy = 329.6 
+F_cgz = 329.6
+n = 4
 
-''' 
+'''
 Assuming that the Fastener Configuration is symmetric around the x,z-axis
 We find that :
   F_cgx = F_x
   F_cgz = F_z 
 '''
 
-P = math.sqrt(F_cgx**2 + F_cgz**2)/n 
+#P = math.sqrt(F_cgx**2 + F_cgz**2)/n 
 Fx = F_cgx / n
 Fz = F_cgz / n
+<<<<<<< HEAD
+print("Fx is ", Fx)
+print("Fz is ", Fz)
+#print(Spacing(1,1,1,1,1,1,1,1))
+=======
+>>>>>>> 1117c9406ef2f7344c972f9b6576c9338b12a953
 # Bearing Stress is the stress between the fastener and the material it is put in
